@@ -1,0 +1,13 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/SR-HomeServices-Captain/obj
+/SR.HomeServices.Application/obj
+/SR.HomeServices.Domain/obj
+/SR.HomeServices.Infrastructure/obj
+/SR-HomeServices-Captain/.vs
+/SR-HomeServices-Captain/bin/Debug/net10.0
+/SR.HomeServices.Infrastructure/bin/Debug/net10.0
+/SR.HomeServices.Domain/bin/Debug/net10.0
+/SR.HomeServices.Application/bin/Debug/net10.0
