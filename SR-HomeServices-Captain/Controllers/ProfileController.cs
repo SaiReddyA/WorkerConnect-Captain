@@ -1,83 +1,35 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using SR.HomeServices.Application.Interfaces;
+using SR.HomeServices.Domain;
+using System.Security.Claims;
 
 namespace SR_HomeServices_Captain.Controllers
 {
     public class ProfileController : Controller
     {
-        // GET: ProfileController
-        public ActionResult Index()
+        private readonly IProfileService _service;
+
+        public ProfileController(IProfileService service)
         {
-            return View();
+            _service = service;
         }
 
-        // GET: ProfileController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Index()
         {
-            return View();
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var model = await _service.GetProfileAsync(userId);
+            return View(model);
         }
 
-        // GET: ProfileController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: ProfileController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Save(ProfileViewModel model)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            if (!ModelState.IsValid)
+                return View("Index", model);
 
-        // GET: ProfileController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: ProfileController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ProfileController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ProfileController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            await _service.UpsertProfileAsync(model, "System");
+            TempData["Success"] = "Profile updated successfully";
+            return RedirectToAction("Index");
         }
     }
 }

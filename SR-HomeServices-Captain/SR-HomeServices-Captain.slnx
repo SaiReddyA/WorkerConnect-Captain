@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="../SR.HomeServices.Application/SR.HomeServices.Application.csproj" />
+  <Project Path="../SR.HomeServices.Domain/SR.HomeServices.Domain.csproj" />
+  <Project Path="../SR.HomeServices.Infrastructure/SR.HomeServices.Infrastructure.csproj" />
+  <Project Path="SR-HomeServices-Captain.csproj" />
+</Solution>
