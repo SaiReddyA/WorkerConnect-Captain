@@ -16,6 +16,8 @@ namespace SR.HomeServices.Domain
         public string Area { get; set; }
         public string Pincode { get; set; }
 
+        public bool HasProfile => ProfileId > 0;
+
         // Skills (Checkboxes)
         public List<SkillCheckboxViewModel> Skills { get; set; } = new();
     }

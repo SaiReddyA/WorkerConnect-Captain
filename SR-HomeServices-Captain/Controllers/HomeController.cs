@@ -8,7 +8,7 @@ namespace SR_HomeServices_Captain.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Bookings");
         }
 
         public IActionResult Privacy()

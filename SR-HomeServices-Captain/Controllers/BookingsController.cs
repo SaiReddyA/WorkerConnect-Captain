@@ -1,32 +1,52 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using SR.HomeServices.Application.Interfaces;
+using System.Security.Claims;
 
 namespace SR_HomeServices_Captain.Controllers
 {
+    [Route("Bookings")]
     public class BookingsController : Controller
     {
-        // GET: BookingsController
-        public ActionResult Index()
+        private readonly IBookingService _bookingService;
+
+        public BookingsController(IBookingService bookingService)
         {
-            return View();
+            _bookingService = bookingService;
         }
 
-        // GET: BookingsController
-        public ActionResult GetPendingRequests()
+        [HttpGet("")]
+        public async Task<IActionResult> Index()
         {
-            return PartialView();
+            int captainId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var model = await _bookingService.GetDashboardAsync(captainId);
+            return View(model);
         }
 
-        // GET: BookingsController
-        public ActionResult GetInProgressRequests()
+        [HttpGet("pendingRequests")]
+        public async Task<IActionResult> GetPendingRequests()
         {
-            return PartialView();
+            int captainId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var data = await _bookingService
+                .GetDashboardAsync(captainId);
+            return PartialView("_GetPendingRequests.cshtml", data.Pending);
         }
 
-        // GET: BookingsController
-        public ActionResult GetCompletedRequests()
+        [HttpGet("inProgressRequests")]
+        public async Task<IActionResult> GetInProgressRequests()
         {
-            return PartialView();
+            int captainId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var data = await _bookingService
+                .GetDashboardAsync(captainId);
+            return PartialView("GetInProgressRequests.cshtml", data.InProgress);
+        }
+
+        [HttpGet("completedRequests")]
+        public async Task<IActionResult> GetCompletedRequests()
+        {
+            int captainId = 1;
+            var data = await _bookingService
+                .GetDashboardAsync(captainId);
+            return PartialView("GetCompletedRequests.cshtml", data.Completed);
         }
 
         // GET: BookingsController/Details/5

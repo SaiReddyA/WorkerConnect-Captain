@@ -19,22 +19,24 @@ namespace SR.HomeServices.Application.Services
 
         public async Task UpsertProfileAsync(ProfileViewModel model, string user)
         {
-            using(var connection = _context.CreateConnection())
+            using (var connection = _context.CreateConnection())
             {
-                if (connection != null && connection.State == System.Data.ConnectionState.Closed) {
-                    //connection = _context.CreateConnection();
-                }
-                var trasaction = connection.BeginTransaction();
-                try
+                connection.Open();
+                using (var transaction = connection.BeginTransaction())
                 {
-                    int addressId = await _repository.UpsertAddressAsync(model, connection, trasaction);
-                    model.AddressId = addressId;
-                    await _repository.UpsertUserProfileAsync(model, user, connection, trasaction);
-                    await _repository.UpsertUserSkillsAsync(model.UserId, model.Skills, user, connection, trasaction);
-                }
-                catch (Exception ex)
-                {
-                    trasaction.Rollback();
+                    try
+                    {
+                        int addressId = await _repository.UpsertAddressAsync(model, connection, transaction);
+                        model.AddressId = addressId;
+                        await _repository.UpsertUserProfileAsync(model, user, connection, transaction);
+                        await _repository.UpsertUserSkillsAsync(model.UserId, model.Skills, user, connection, transaction);
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
                 }
             }
         }

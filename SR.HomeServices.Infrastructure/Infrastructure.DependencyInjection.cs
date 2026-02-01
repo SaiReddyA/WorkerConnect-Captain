@@ -55,6 +55,7 @@ namespace SR.HomeServices.Infrastructure
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IProfileRepository, ProfileRepository>();
+            services.AddScoped<IBookingRepository, BookingRepository>();
 
             // Security
             return services;

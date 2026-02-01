@@ -1,1 +1,166 @@
-﻿
+﻿@model BookingDashboardVm
+@{
+    ViewData["Title"] = "Bookings Dashboard";
+}
+
+<div class="container-fluid py-4">
+
+    <!-- ===== WELCOME BANNER ===== -->
+    <div class="card mb-4 text-white"
+         style="background: linear-gradient(90deg,#2563eb,#3b82f6); border-radius:12px;">
+        <div class="card-body">
+            <h4 class="fw-bold mb-1">Welcome back, John!</h4>
+            <p class="mb-0">
+                You have <strong>@Model.Pending.Count</strong> pending requests
+            </p>
+        </div>
+    </div>
+
+    <!-- ===== STATS CARDS ===== -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm text-center">
+                <div class="card-body">
+                    <i class="bi bi-exclamation-circle text-warning fs-3"></i>
+                    <h3 class="fw-bold mt-2">@Model.Pending.Count</h3>
+                    <div class="text-muted">Pending</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm text-center">
+                <div class="card-body">
+                    <i class="bi bi-clock text-primary fs-3"></i>
+                    <h3 class="fw-bold mt-2">@Model.InProgress.Count</h3>
+                    <div class="text-muted">In Progress</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm text-center">
+                <div class="card-body">
+                    <i class="bi bi-check-circle text-success fs-3"></i>
+                    <h3 class="fw-bold mt-2">@Model.Completed.Count</h3>
+                    <div class="text-muted">Completed</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PENDING REQUESTS ===== -->
+    <h5 class="fw-bold mb-3">
+        <i class="bi bi-exclamation-circle text-warning me-1"></i>
+        Pending Requests (@Model.Pending.Count)
+    </h5>
+    <!-- Pending -->
+    @Html.Partial("_GetPendingRequests.cshtml", Model.Pending)
+
+    @* 
+    @foreach (var item in Model.Pending)
+    {
+        <div class="card mb-3 shadow-sm border-start border-4 border-primary">
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="fw-bold mb-1">@item.CustomerName</h6>
+                        <div class="text-muted">@item.SkillName</div>
+                    </div>
+                    <span class="badge bg-danger-subtle text-danger">High</span>
+                </div>
+
+                <div class="mt-2 text-muted">
+                    <i class="bi bi-geo-alt"></i> @item.ServiceAddress
+                </div>
+
+                <div class="mt-1 text-muted">
+                    <i class="bi bi-clock"></i>
+                    @item.CreatedDate.ToString("dd MMM yyyy, hh:mm tt")
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <h5 class="text-success fw-bold mb-0">₹85</h5>
+
+                    <div>
+                        <button class="btn btn-danger me-2">Decline</button>
+                        <button class="btn btn-success">Accept</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+ *@
+    <!-- ===== IN PROGRESS ===== -->
+    <h5 class="fw-bold mt-5 mb-3">
+        <i class="bi bi-clock text-primary me-1"></i>
+        In Progress (@Model.InProgress.Count)
+    </h5>
+    <!-- In Progress -->
+    @Html.Partial("GetInProgressRequests.cshtml", Model.InProgress)
+
+   
+   @*  @foreach (var item in Model.InProgress)
+    {
+        <div class="card mb-3 shadow-sm border-start border-4 border-primary">
+            <div class="card-body">
+
+                <h6 class="fw-bold mb-1">@item.CustomerName</h6>
+                <div class="text-muted">@item.SkillName</div>
+
+                <div class="mt-2 text-muted">
+                    <i class="bi bi-geo-alt"></i> @item.ServiceAddress
+                </div>
+
+                <div class="mt-1 text-muted">
+                    <i class="bi bi-clock"></i>
+                    Started: @item.CreatedDate.ToString("hh:mm tt")
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <h5 class="text-success fw-bold mb-0">₹280</h5>
+                    <button class="btn btn-primary">Complete</button>
+                </div>
+
+            </div>
+        </div>
+    }
+ *@
+    <!-- ===== COMPLETED ===== -->
+    <h5 class="fw-bold mt-5 mb-3">
+        <i class="bi bi-check-circle text-success me-1"></i>
+        Recently Completed (@Model.Completed.Count)
+    </h5>
+    <!-- Completed -->
+    @Html.Partial("GetCompletedRequests.cshtml", Model.Completed)
+    @* @foreach (var item in Model.Completed)
+    {
+        <div class="card mb-3 shadow-sm border-start border-4 border-success">
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="fw-bold mb-1">@item.CustomerName</h6>
+                        <div class="text-muted">@item.SkillName</div>
+                    </div>
+                    <span class="text-warning">
+                        <i class="bi bi-star-fill"></i> 5
+                    </span>
+                </div>
+
+                <div class="mt-2 text-muted">
+                    <i class="bi bi-geo-alt"></i> @item.ServiceAddress
+                </div>
+
+                <div class="mt-1 text-muted">
+                    <i class="bi bi-clock"></i>
+                    @item.CreatedDate.ToString("dd MMM yyyy, hh:mm tt")
+                </div>
+
+            </div>
+        </div>
+    }
+ *@
+</div>

@@ -51,6 +51,7 @@ namespace SR.HomeServices.Application
 
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
             services.AddScoped<IProfileService, ProfileService>();
+            services.AddScoped<IBookingService, BookingService>();
 
             return services;
         }
