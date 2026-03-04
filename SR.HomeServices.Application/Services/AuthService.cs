@@ -39,6 +39,8 @@ public class AuthService : IAuthService
         if (existing != null)
             throw new Exception("User already exists");
 
+
+
         var user = new User
         {
             Email = request.Email,
