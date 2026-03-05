@@ -7,7 +7,6 @@
         No pending bookings found.
     </div>
 }
-
 else
 {
     @foreach (var item in Model)
@@ -22,7 +21,7 @@ else
 
                 <div class="d-flex justify-content-between align-items-center">
                     <span class="text-secondary">
-                        <i class="bi bi-person-circle"></i> @item.CustomerName
+                        <i class="bi bi-person-circle"></i> Test @item.CustomerName
                     </span>
                     <span class="text-secondary">
                         <i class="bi bi-geo-alt"></i> @item.ServiceAddress
